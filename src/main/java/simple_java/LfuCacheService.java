@@ -1,24 +1,22 @@
 package simple_java;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LfuCacheService {
 
-    private static final Logger logger = LogManager.getLogger(LfuCacheService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LfuCacheService.class);
     private Node head;
     private Node tail;
-    private ConcurrentHashMap<Integer, Node> map;
+    private Map<Integer, Node> map;
     private final int capacity;
     private static int evictions;
 
     public LfuCacheService(int capacity) {
         this.capacity = capacity;
         this.map = new ConcurrentHashMap<>();
-        BasicConfigurator.configure();
     }
 
     public String get(int key) {
@@ -47,14 +45,13 @@ public class LfuCacheService {
                 map.remove(head.key);
                 removeNode(head);
                 evictions++;
-                logger.info("Removed excessive node with key: " + head.key + ". Total evictions: " + evictions);
+                LOGGER.info("Removed excessive node with key: " + head.key + ". Total evictions: " + evictions);
             }
-
             Node node = new Node(key, value, 1);
             addNodeWithUpdatedFrequency(node);
             map.put(key, node);
             long timeElapsed = System.nanoTime() - startTime;
-            logger.info("Added new record with key: " + key + ". Time elapsed for operation in nanos: " + timeElapsed);
+            LOGGER.info("Added new record with key: " + key + ". Time elapsed for operation in nanos: " + timeElapsed);
         }
     }
 
