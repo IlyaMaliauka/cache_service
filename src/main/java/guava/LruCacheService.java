@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utilities.annotations.Countable;
 import utilities.annotations.Timed;
 
 import java.util.concurrent.ExecutionException;
@@ -43,6 +44,7 @@ public class LruCacheService {
      * @param value of a cache entry
      */
     @Timed
+    @Countable
     public void put(int key, String value) {
         cache.put(key, value);
         LOGGER.info("Just inserted new value into cache with {} key.", key);

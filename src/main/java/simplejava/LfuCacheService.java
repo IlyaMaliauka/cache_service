@@ -3,6 +3,7 @@ package simplejava;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utilities.annotations.Countable;
 import utilities.annotations.Timed;
 
 import java.util.Collections;
@@ -31,6 +32,7 @@ public class LfuCacheService {
      * @param value an integer
      */
     @Timed
+    @Countable
     public void put(int key, String value) {
         String valueToAdd = values.get(key);
         if (valueToAdd == null) {
