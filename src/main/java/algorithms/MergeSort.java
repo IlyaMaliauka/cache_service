@@ -2,7 +2,7 @@ package algorithms;
 
 public class MergeSort {
 
-    public static void mergeSort(int[] array, int value) {
+    public static void sort(int[] array, int value) {
         if (value < 2) {
             return;
         }
@@ -16,8 +16,8 @@ public class MergeSort {
         for (int i = mid; i < value; i++) {
             r[i - mid] = array[i];
         }
-        mergeSort(l, mid);
-        mergeSort(r, value - mid);
+        sort(l, mid);
+        sort(r, value - mid);
 
         merge(array, l, r, mid, value - mid);
     }

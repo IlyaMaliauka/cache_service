@@ -3,6 +3,10 @@ package algorithms;
 public class BinarySearch {
 
     public static int iterativeBinarySearch(int[] array, int valueToFind) {
+        if (!isSorted(array)) {
+            InsertionSort.sort(array);
+        }
+
         int low = 0, high = array.length - 1;
 
         while (low <= high) {
@@ -21,6 +25,10 @@ public class BinarySearch {
     }
 
     public static int recursiveBinarySearch(int[] array, int low, int high, int valueToFind) {
+        if (!isSorted(array)) {
+            InsertionSort.sort(array);
+        }
+
         if (low > high) {
             return -1;
         }
@@ -33,5 +41,14 @@ public class BinarySearch {
         } else {
             return recursiveBinarySearch(array, mid + 1, high, valueToFind);
         }
+    }
+
+    private static boolean isSorted(int[] a) {
+        for (int i = 0; i < a.length - 1; i++) {
+            if (a[i] > a[i + 1]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
