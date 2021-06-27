@@ -33,7 +33,7 @@ public class LfuCacheService {
      */
     @Timed
     @Countable
-    public void put(int key, String value) {
+    public synchronized void put(int key, String value) {
         String valueToAdd = values.get(key);
         if (valueToAdd == null) {
             if (timeAndFrequency.size() == capacity) {
@@ -43,7 +43,7 @@ public class LfuCacheService {
                 LOGGER.info("Removed least frequent used excessive entry from cache by key: {}", kickedKey);
             }
             timeAndFrequency.put(key, new AccessRate(key, 1, System.nanoTime()));
-        } else { //If the keys are the same, only increase the frequency, update time, and do not replace
+        } else {
             AccessRate accessRate = timeAndFrequency.get(key);
             accessRate.hitCount += 1;
             accessRate.lastTime = System.nanoTime();
@@ -57,7 +57,7 @@ public class LfuCacheService {
      * @param key of the value in cache
      * @return value from cache or empty string
      */
-    public String get(int key) {
+    public synchronized String get(int key) {
         String value = values.get(key);
         if (value != null) {
             AccessRate accessRate = timeAndFrequency.get(key);

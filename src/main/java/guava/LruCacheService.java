@@ -2,11 +2,12 @@ package guava;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.RemovalListener;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utilities.annotations.Countable;
 import utilities.annotations.Timed;
+import utilities.listeners.RemovalListener;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -20,12 +21,8 @@ public class LruCacheService {
      {
         cache = CacheBuilder.newBuilder()
                 .maximumSize(capacity)
-                .expireAfterAccess(2, TimeUnit.SECONDS)
-                .removalListener((RemovalListener<Integer, String>) entry -> {
-                    if (entry.wasEvicted()) {
-                        LOGGER.info("Removed excessive cache value. Removal cause: " + entry.getCause());
-                    }
-                })
+                .expireAfterAccess(5, TimeUnit.SECONDS)
+                .removalListener(new RemovalListener<>())
                 .recordStats()
                 .build();
     }
@@ -45,12 +42,21 @@ public class LruCacheService {
      */
     @Timed
     @Countable
-    public void put(int key, String value) {
+    public synchronized void put(int key, String value) {
         cache.put(key, value);
         LOGGER.info("Just inserted new value into cache with {} key.", key);
     }
 
-    public String get(int key) throws ExecutionException {
-        return cache.get(key, () -> null);
+    /**
+     * @param key of a cache entry
+     * @return the value of a cache entry
+     */
+    public synchronized String get(int key) {
+        try {
+            return cache.get(key, () -> null);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return StringUtils.EMPTY;
     }
 }
