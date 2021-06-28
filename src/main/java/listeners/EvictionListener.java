@@ -1,12 +1,12 @@
-package utilities.listeners;
+package listeners;
 
 import com.google.common.cache.RemovalNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RemovalListener<K,V> implements com.google.common.cache.RemovalListener<K,V> {
+public class EvictionListener<K,V> implements com.google.common.cache.RemovalListener<K,V> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RemovalListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EvictionListener.class);
 
     @Override
     public void onRemoval(RemovalNotification entry) {

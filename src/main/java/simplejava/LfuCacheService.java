@@ -3,8 +3,8 @@ package simplejava;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utilities.annotations.Countable;
-import utilities.annotations.Timed;
+import annotations.annotations.Countable;
+import annotations.annotations.Timed;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,8 +45,8 @@ public class LfuCacheService {
             timeAndFrequency.put(key, new AccessRate(key, 1, System.nanoTime()));
         } else {
             AccessRate accessRate = timeAndFrequency.get(key);
-            accessRate.hitCount += 1;
-            accessRate.lastTime = System.nanoTime();
+            accessRate.incrementHitCount();
+            accessRate.setLastTime(System.nanoTime());
         }
         values.put(key, value);
     }
@@ -61,8 +61,8 @@ public class LfuCacheService {
         String value = values.get(key);
         if (value != null) {
             AccessRate accessRate = timeAndFrequency.get(key);
-            accessRate.hitCount += 1;
-            accessRate.lastTime = System.nanoTime();
+            accessRate.incrementHitCount();
+            accessRate.setLastTime(System.nanoTime());
             return value;
         }
         return StringUtils.EMPTY;
@@ -70,6 +70,6 @@ public class LfuCacheService {
 
     private Integer getKickedKey() {
         AccessRate min = Collections.min(timeAndFrequency.values());
-        return min.key;
+        return min.getKey();
     }
 }

@@ -5,9 +5,9 @@ import com.google.common.cache.CacheBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utilities.annotations.Countable;
-import utilities.annotations.Timed;
-import utilities.listeners.RemovalListener;
+import annotations.annotations.Countable;
+import annotations.annotations.Timed;
+import listeners.EvictionListener;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +22,7 @@ public class LruCacheService {
         cache = CacheBuilder.newBuilder()
                 .maximumSize(capacity)
                 .expireAfterAccess(5, TimeUnit.SECONDS)
-                .removalListener(new RemovalListener<>())
+                .removalListener(new EvictionListener<>())
                 .recordStats()
                 .build();
     }

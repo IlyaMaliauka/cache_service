@@ -1,4 +1,4 @@
-package utilities.aspects;
+package aspects;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class StatisticsAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsAspect.class);
     private Map<Class<?>, Integer> counter = new HashMap<>();
 
-    @Pointcut("@annotation(utilities.annotations.Countable)")
+    @Pointcut("@annotation(Countable)")
     private void allLogEventMethods() {}
 
     @AfterReturning("allLogEventMethods()")

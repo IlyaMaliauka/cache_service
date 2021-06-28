@@ -1,4 +1,4 @@
-package utilities.aspects;
+package aspects;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,7 +16,7 @@ public class MeasurementAspect {
      * @return proceed
      * @throws Throwable exception
      */
-    @Around("@annotation(utilities.annotations.Timed)")
+    @Around("@annotation(Timed)")
     public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.nanoTime();
         Object proceed = joinPoint.proceed();

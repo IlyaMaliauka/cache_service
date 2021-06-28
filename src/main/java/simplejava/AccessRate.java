@@ -2,9 +2,13 @@ package simplejava;
 
 public class AccessRate implements Comparable<AccessRate>{
 
-    Integer key;
-    Integer hitCount;
-    Long lastTime;
+    private Integer key;
+    private Integer hitCount;
+    private Long lastTime;
+
+    public void incrementHitCount() {
+        this.hitCount += 1;
+    }
 
     /**
      * class to get access rate of an entry in cache
@@ -16,6 +20,14 @@ public class AccessRate implements Comparable<AccessRate>{
         this.key = key;
         this.hitCount = hitCount;
         this.lastTime = lastTime;
+    }
+
+    public void setLastTime(Long lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public Integer getKey() {
+        return key;
     }
 
     public int compareTo(AccessRate o) {
