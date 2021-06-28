@@ -16,7 +16,7 @@ public class MeasurementAspect {
      * @return proceed
      * @throws Throwable exception
      */
-    @Around("@annotation(Timed)")
+    @Around("@annotation(annotations.annotations.Timed)")
     public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.nanoTime();
         Object proceed = joinPoint.proceed();

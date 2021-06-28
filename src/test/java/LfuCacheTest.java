@@ -1,4 +1,6 @@
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -6,12 +8,28 @@ import simplejava.LfuCacheService;
 
 public class LfuCacheTest {
 
-    @Test
-    public void testLfuCacheServiceServiceService() {
+    private LfuCacheService lfuCache;
+
+    @Before
+    public void init() {
         ApplicationContext context = new ClassPathXmlApplicationContext("aspects.xml");
-        LfuCacheService cacheService = (LfuCacheService) context.getBean("cacheService");
-        for (int i=1; i<=550; i++) {
-            cacheService.put(i, RandomStringUtils.randomAlphabetic(5));
+        lfuCache = (LfuCacheService) context.getBean("lfuCache");
+    }
+
+    @Test
+    public void testPutMethod() {
+        lfuCache.put(1, "testValue");
+        Assert.assertNotNull(lfuCache.get(1));
+        Assert.assertEquals("", lfuCache.get(2));
+        lfuCache.put(1, "anotherValue");
+        Assert.assertEquals( "anotherValue", lfuCache.get(1));
+    }
+
+    @Test
+    public void testCacheSize() {
+        for (int i=0; i<=150000; i++) {
+            lfuCache.put(i, RandomStringUtils.random(5));
         }
+        Assert.assertEquals("", lfuCache.get(1));
     }
 }

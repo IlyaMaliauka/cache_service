@@ -14,21 +14,20 @@ import java.util.concurrent.TimeUnit;
 
 public class LruCacheService {
 
-    private int capacity;
+    private final int MAX_CAPACITY = 100000;
     private static final Logger LOGGER = LoggerFactory.getLogger(LruCacheService.class);
     private final Cache<Integer, String> cache;
 
      {
         cache = CacheBuilder.newBuilder()
-                .maximumSize(capacity)
+                .maximumSize(MAX_CAPACITY)
                 .expireAfterAccess(5, TimeUnit.SECONDS)
                 .removalListener(new EvictionListener<>())
                 .recordStats()
                 .build();
     }
 
-    public LruCacheService(int capacity) {
-        this.capacity = capacity;
+    public LruCacheService() {
     }
 
     public String getStats() {

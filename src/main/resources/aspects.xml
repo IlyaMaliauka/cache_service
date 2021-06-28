@@ -7,5 +7,6 @@
     <aop:aspectj-autoproxy />
     <bean id="measurementAspect" class="aspects.MeasurementAspect" />
     <bean id="statisticsAspect" class="aspects.StatisticsAspect" />
-    <bean id="cacheService" class="simplejava.LfuCacheService" />
+    <bean id="lfuCache" class="simplejava.LfuCacheService" />
+    <bean id="lruCache" class="guava.LruCacheService" />
 </beans>

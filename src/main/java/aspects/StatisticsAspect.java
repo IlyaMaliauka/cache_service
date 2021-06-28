@@ -18,7 +18,7 @@ public class StatisticsAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticsAspect.class);
     private Map<Class<?>, Integer> counter = new HashMap<>();
 
-    @Pointcut("@annotation(Countable)")
+    @Pointcut("@annotation(annotations.annotations.Countable)")
     private void allLogEventMethods() {}
 
     @AfterReturning("allLogEventMethods()")
