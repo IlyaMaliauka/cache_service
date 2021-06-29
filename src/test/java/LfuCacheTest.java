@@ -27,7 +27,7 @@ public class LfuCacheTest {
 
     @Test
     public void testCacheSize() {
-        for (int i=0; i<=150000; i++) {
+        for (int i=0; i<=1500; i++) {
             lfuCache.put(i, RandomStringUtils.random(5));
         }
         Assert.assertEquals("", lfuCache.get(1));

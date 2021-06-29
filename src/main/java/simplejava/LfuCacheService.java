@@ -13,7 +13,7 @@ import java.util.Map;
 public class LfuCacheService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LfuCacheService.class);
-    private static final int DEFAULT_MAX_CAPACITY = 500;
+    private static final int DEFAULT_MAX_CAPACITY = 1000;
     private final int capacity;
     private final Map<Integer, AccessRate> timeAndFrequency = new HashMap<>();
     private final Map<Integer, String> values = new HashMap<>();

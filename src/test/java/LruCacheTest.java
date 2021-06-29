@@ -27,7 +27,7 @@ public class LruCacheTest {
 
     @Test
     public void testCacheSize() {
-        for (int i=0; i<=150000; i++) {
+        for (int i=0; i<=1500; i++) {
             lruCache.put(i, RandomStringUtils.random(5));
         }
         Assert.assertNull(lruCache.get(1));

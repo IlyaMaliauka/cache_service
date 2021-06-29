@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LruCacheService {
 
-    private final int MAX_CAPACITY = 100000;
+    private final int MAX_CAPACITY = 1000;
     private static final Logger LOGGER = LoggerFactory.getLogger(LruCacheService.class);
     private final Cache<Integer, String> cache;
 
